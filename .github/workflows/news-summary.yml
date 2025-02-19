@@ -1,7 +1,7 @@
 - name: Generate News Summary
   run: |
     curl -o news_summary.txt "YOUR_CUSTOM_CHATGPT_SUMMARY_URL"
-
+    
 - name: Debug: Show File Contents
   run: cat news_summary.txt
 
