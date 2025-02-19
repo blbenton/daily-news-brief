@@ -7,25 +7,31 @@ on:
 
 jobs:  
   fetch-news:  
-    runs-on: ubuntu-latest  # This should be indented correctly
+    runs-on: ubuntu-latest  
 
     steps:  
       - name: Checkout Repository  
         uses: actions/checkout@v3  
 
-      - name: Fetch Latest News  
+      - name: Set Up Python  
+        uses: actions/setup-python@v3  
+        with:  
+          python-version: '3.9'  # Adjust version if needed  
+
+      - name: Install Dependencies  
         run: |  
-          echo "Fetching news..."  
-          # This is where your script to fetch and format the summary goes  
-          # Example: python fetch_news.py  
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi  
 
-      - name: Commit and Push Changes  # This step now has correct indentation
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Provides necessary permissions
-        run: |
-          git config --global user.name "github-actions"
-          git config --global user.email "github-actions@github.com"
-          git add .
-          git commit -m "Automated daily news summary update" || echo "No changes to commit"
-          git push https://x-access-token:${GITHUB_TOKEN}@github.com/blbenton/daily-news-brief.git main
+      - name: Fetch Latest News  
+        run: python fetch_news.py  # ✅ This ensures the script runs  
 
+      - name: Commit and Push Changes  
+        env:  
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  
+        run: |  
+          git config --global user.name "github-actions"  
+          git config --global user.email "github-actions@github.com"  
+          git pull --rebase origin main  
+          git add .  
+          git commit -m "Automated daily news summary update" || echo "No changes to commit"  
+          git push https://x-access-token:${GITHUB_TOKEN}@github.com/blbenton/daily-news-brief.git main  
