@@ -3,7 +3,7 @@ import datetime
 
 # Function to fetch news from your news summary service
 def fetch_news():
-    url = https://github.com/blbenton/daily-news-brief.git  # Replace with the actual API or scraping source
+    url = "https://github.com/blbenton/daily-news-brief.git"  # Replace with the actual API or scraping source
     response = requests.get(url)
     
     if response.status_code == 200:
