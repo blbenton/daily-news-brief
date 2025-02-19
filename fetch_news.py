@@ -1,27 +1,16 @@
-import requests
-import datetime
+import openai  # Required to communicate with ChatGPT
 
-# Function to fetch news from your news summary service
-def fetch_news():
-    url = "https://github.com/blbenton/daily-news-brief.git"  # Replace with the actual API or scraping source
-    response = requests.get(url)
-    
-    if response.status_code == 200:
-        return response.text
-    else:
-        return "Failed to fetch news."
+# Replace with your OpenAI API key if running this locally
+openai.api_key = "YOUR_OPENAI_API_KEY"
 
-# Save news to a file
-def save_news():
-    today = datetime.datetime.now().strftime("%Y-%m-%d")
-    news_content = fetch_news()
-    
-    with open(f"news_summary_{today}.txt", "w", encoding="utf-8") as file:
-        file.write(news_content)
-    
-    print("News summary saved successfully.")
+# Request the news summary
+response = openai.ChatCompletion.create(
+    model="gpt-4-turbo",
+    messages=[{"role": "system", "content": "Generate today's news summary in the usual format."}]
+)
 
-# Run the script
-if __name__ == "__main__":
-    save_news()
+news_summary = response["choices"][0]["message"]["content"]
 
+# Save to a text file
+with open("news_summary.txt", "w", encoding="utf-8") as file:
+    file.write(news_summary)
