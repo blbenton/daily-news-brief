@@ -37,4 +37,4 @@ jobs:
           body: "Attached is your latest news summary."
           to: "blbenton@gmail.com"
           from: "Daily News Bot <blbenton@gmail.com>"
-          attachments: "news_summary.txt"
+          attachments: "news_summary_$(date +%Y-%m-%d).txt"
