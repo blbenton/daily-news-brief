@@ -25,7 +25,7 @@ jobs:
   run: |
     git config --global user.name "github-actions"
     git config --global user.email "github-actions@github.com"
-    git pull --rebase  # Fetch the latest changes and rebase before pushing
+    git pull --rebase origin main  # Fetch the latest changes and rebase
     git add .
     git commit -m "Automated daily news summary update" || echo "No changes to commit"
     git push https://x-access-token:${GITHUB_TOKEN}@github.com/blbenton/daily-news-brief.git main
