@@ -1,44 +1,19 @@
-name: Daily News Summary  
+- name: Generate News Summary
+  run: |
+    curl -o news_summary.txt "YOUR_CUSTOM_CHATGPT_SUMMARY_URL"
 
-on:  
-  schedule:  
-    - cron: '0 12 * * *'  # Runs every day at 12 PM UTC  
-  workflow_dispatch:  # Allows manual triggering  
+- name: Debug: Show File Contents
+  run: cat news_summary.txt
 
-jobs:  
-  fetch-news:  
-    runs-on: ubuntu-latest  
-
-    steps:  
-      - name: Checkout Repository  
-        uses: actions/checkout@v3  
-
-      - name: Set up Python  
-        uses: actions/setup-python@v4  
-        with:  
-          python-version: '3.9'  # Uses the latest Python 3 version  
-
-      - name: Install dependencies  
-        run: |  
-          pip install requests  # Install requests module  
-
-      - name: Fetch Latest News  
-        run: |  
-          python fetch_news.py  # Run your script  
-
-      - name: Debug:List Files in Directory  
-        run: ls -lah  
-
-      - name: Send Email with News Summary
-
-        uses: dawidd6/action-send-mail@v3
-        with:
-          server_address: smtp.gmail.com
-          server_port: 587
-          username: ${{ secrets.EMAIL_USERNAME }}
-          password: ${{ secrets.EMAIL_PASSWORD }}
-          subject: "Your Daily News Brief"
-          body: "Attached is your latest news summary."
-          to: "blbenton@gmail.com"
-          from: "Daily News Bot <blbenton@gmail.com>"
-          attachments: "news_summary_*.txt"
+- name: Send Email with News Summary
+  uses: dawidd6/action-send-mail@v3
+  with:
+    server_address: smtp.gmail.com
+    server_port: 587
+    username: ${{ secrets.EMAIL_USERNAME }}
+    password: ${{ secrets.EMAIL_PASSWORD }}
+    subject: "Your Daily News Brief"
+    body: "Attached is your latest news summary."
+    to: "blbenton@gmail.com"
+    from: "Daily News Bot"
+    attachments: "news_summary.txt"
