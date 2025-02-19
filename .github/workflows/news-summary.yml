@@ -24,7 +24,10 @@ jobs:
 
       - name: Fetch Latest News  
         run: |  
-          python fetch_news.py  # Run your script  
+          python fetch_news.py  # Run your script
+          
+      - name: Debug: List Files in Directory
+        run: ls -lah
 
       - name: Send Email with News Summary
         uses: dawidd6/action-send-mail@v3
