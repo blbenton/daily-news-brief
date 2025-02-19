@@ -1,0 +1,28 @@
+name: Daily News Summary  
+
+on:  
+  schedule:  
+    - cron: '0 12 * * *'  # Runs every day at 12 PM UTC  
+  workflow_dispatch:  # Allows manual triggering  
+
+jobs:  
+  fetch-news:  
+    runs-on: ubuntu-latest  
+
+    steps:  
+      - name: Checkout Repository  
+        uses: actions/checkout@v3  
+
+      - name: Fetch Latest News  
+        run: |  
+          echo "Fetching news..."  
+          # This is where your script to fetch and format the summary goes  
+          # Example: python fetch_news.py  
+
+      - name: Commit and Push Changes  
+        run: |  
+          git config --global user.name "github-actions"  
+          git config --global user.email "github-actions@github.com"  
+          git add .  
+          git commit -m "Automated daily news summary update" || echo "No changes to commit"  
+          git push  
