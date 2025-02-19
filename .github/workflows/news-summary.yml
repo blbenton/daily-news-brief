@@ -7,7 +7,7 @@ on:
 
 jobs:  
   fetch-news:  
-    runs-on: ubuntu-latest  
+    runs-on: ubuntu-latest  # This should be indented correctly
 
     steps:  
       - name: Checkout Repository  
@@ -19,13 +19,13 @@ jobs:
           # This is where your script to fetch and format the summary goes  
           # Example: python fetch_news.py  
 
-     - name: Commit and Push Changes
-  env:
-    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Provides necessary permissions
-  run: |
-    git config --global user.name "github-actions"
-    git config --global user.email "github-actions@github.com"
-    git pull --rebase origin main  # Fetch the latest changes and rebase
-    git add .
-    git commit -m "Automated daily news summary update" || echo "No changes to commit"
-    git push https://x-access-token:${GITHUB_TOKEN}@github.com/blbenton/daily-news-brief.git main
+      - name: Commit and Push Changes  # This step now has correct indentation
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Provides necessary permissions
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+          git add .
+          git commit -m "Automated daily news summary update" || echo "No changes to commit"
+          git push https://x-access-token:${GITHUB_TOKEN}@github.com/blbenton/daily-news-brief.git main
+
