@@ -13,17 +13,18 @@ jobs:
       - name: Checkout Repository  
         uses: actions/checkout@v3  
 
-      - name: Set Up Python  
-        uses: actions/setup-python@v3  
+      - name: Set up Python  
+        uses: actions/setup-python@v4  
         with:  
-          python-version: '3.9'  # Adjust version if needed  
+          python-version: '3.9'  # Uses the latest Python 3 version  
 
-      - name: Install Dependencies  
+      - name: Install dependencies  
         run: |  
-          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi  
+          pip install requests  # Install requests module  
 
       - name: Fetch Latest News  
-        run: python fetch_news.py  # ✅ This ensures the script runs  
+        run: |  
+          python fetch_news.py  # Run your script  
 
       - name: Commit and Push Changes  
         env:  
